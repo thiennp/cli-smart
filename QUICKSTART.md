@@ -9,11 +9,14 @@ Get your AI Bot Agent running in minutes!
 
 ## Installation
 
-### Option 1: Automatic Installation (Recommended)
+### Option 1: Install from PyPI (Recommended)
 
 ```bash
-# Run the installation script
-./install.sh
+# Install the package
+pip install ai-bot-agent
+
+# Set up your API key
+ai-bot setup
 ```
 
 ### Option 2: Manual Installation
@@ -29,11 +32,21 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Set up environment
-cp env.example .env
-# Edit .env and add your OpenAI API key
+ai-bot setup
 ```
 
 ## Configuration
+
+The `ai-bot setup` command will:
+
+1. **Open your browser** to the OpenAI API key page
+2. **Guide you through** creating an API key
+3. **Test the key** to ensure it works
+4. **Save it securely** to your `.env` file
+
+### Manual Configuration
+
+If you prefer to set up manually:
 
 1. **Get your OpenAI API key**:
    - Go to https://platform.openai.com/
@@ -61,23 +74,23 @@ cp env.example .env
 source venv/bin/activate
 
 # Start chat mode
-python main.py chat
+ai-bot chat
 ```
 
 ### Quick Commands
 
 ```bash
 # Ask a single question
-python main.py ask "What is machine learning?"
+ai-bot ask "What is machine learning?"
 
 # Generate code
-python main.py code "Create a web scraper"
+ai-bot code "Create a web scraper"
 
 # Analyze a file
-python main.py analyze main.py
+ai-bot analyze main.py
 
 # Search the web
-python main.py search "latest Python features"
+ai-bot search "latest Python features"
 ```
 
 ### Demo Mode
@@ -102,19 +115,19 @@ AI: Here's a Python function to calculate Fibonacci numbers...
 ### Code Generation
 ```bash
 # Generate a web scraper
-python main.py code "Create a web scraper that extracts titles from a news website"
+ai-bot code "Create a web scraper that extracts titles from a news website"
 
 # Generate a JavaScript function
-python main.py code "Create a function to validate email addresses" --lang javascript
+ai-bot code "Create a function to validate email addresses" --lang javascript
 ```
 
 ### File Analysis
 ```bash
 # Analyze your code
-python main.py analyze main.py
+ai-bot analyze main.py
 
 # Get insights about any file
-python main.py analyze requirements.txt
+ai-bot analyze requirements.txt
 ```
 
 ## Troubleshooting
@@ -128,8 +141,8 @@ python main.py analyze requirements.txt
    ```
 
 2. **"OpenAI API key not found"**
-   - Make sure you've added your API key to the `.env` file
-   - Check that the `.env` file is in the project root
+   - Run `ai-bot setup` to configure your API key
+   - Or manually add your API key to the `.env` file
 
 3. **Permission denied**
    ```bash
@@ -141,10 +154,10 @@ python main.py analyze requirements.txt
 
 ```bash
 # Show all available commands
-python main.py --help
+ai-bot --help
 
 # Show help for specific command
-python main.py chat --help
+ai-bot chat --help
 ```
 
 ## Next Steps

@@ -9,6 +9,7 @@ import sys
 import json
 import asyncio
 import subprocess
+import webbrowser
 from typing import Optional, List, Dict, Any
 from pathlib import Path
 import typer
@@ -166,6 +167,7 @@ def display_help():
     help_text = """
     [bold]Available Commands:[/bold]
     
+    [green]setup[/green] - Set up OpenAI API key
     [green]chat[/green] - Start interactive chat mode
     [green]ask[/green] - Ask a single question
     [green]code[/green] - Generate code from description
@@ -176,12 +178,99 @@ def display_help():
     [green]exit[/green] - Exit the bot
     
     [bold]Examples:[/bold]
+    ai-bot setup
     ai-bot chat
     ai-bot ask "What is Python?"
     ai-bot code "Create a simple web scraper"
     ai-bot analyze main.py
     """
     console.print(Panel(help_text, title="Help", style="green"))
+
+def setup_openai_key():
+    """Set up OpenAI API key with automated assistance."""
+    display_banner()
+    
+    console.print("[bold green]🔧 OpenAI API Key Setup[/bold green]")
+    console.print("This will help you get and configure your OpenAI API key.\n")
+    
+    # Check if .env file exists
+    env_file = Path(".env")
+    if not env_file.exists():
+        console.print("[yellow]Creating .env file...[/yellow]")
+        env_file.write_text("OPENAI_API_KEY=your_openai_api_key_here\n")
+    
+    # Open OpenAI API key page
+    console.print("[bold blue]Step 1: Getting your OpenAI API key[/bold blue]")
+    console.print("Opening OpenAI API key page in your browser...")
+    
+    try:
+        webbrowser.open("https://platform.openai.com/api-keys")
+        console.print("[green]✓ Browser opened successfully[/green]")
+    except Exception as e:
+        console.print(f"[red]Could not open browser automatically: {e}[/red]")
+        console.print("Please manually visit: https://platform.openai.com/api-keys")
+    
+    console.print("\n[bold yellow]Instructions:[/bold yellow]")
+    console.print("1. Sign in to your OpenAI account")
+    console.print("2. Click 'Create new secret key'")
+    console.print("3. Give it a name (e.g., 'AI Bot Agent')")
+    console.print("4. Copy the API key (it starts with 'sk-')")
+    console.print("5. Keep it secure - you won't see it again!")
+    
+    # Wait for user to get the key
+    console.print("\n[bold blue]Step 2: Enter your API key[/bold blue]")
+    api_key = Prompt.ask(
+        "Enter your OpenAI API key",
+        password=True,
+        default=""
+    )
+    
+    if not api_key or api_key == "your_openai_api_key_here":
+        console.print("[red]No valid API key provided. Setup cancelled.[/red]")
+        return False
+    
+    # Validate the API key format
+    if not api_key.startswith("sk-"):
+        console.print("[red]Invalid API key format. OpenAI API keys start with 'sk-'[/red]")
+        return False
+    
+    # Test the API key
+    console.print("\n[bold blue]Step 3: Testing your API key[/bold blue]")
+    try:
+        test_client = openai.OpenAI(api_key=api_key)
+        # Try a simple API call to test the key
+        response = test_client.models.list()
+        console.print("[green]✓ API key is valid![/green]")
+    except Exception as e:
+        console.print(f"[red]❌ API key test failed: {e}[/red]")
+        console.print("Please check your API key and try again.")
+        return False
+    
+    # Save the API key to .env file
+    console.print("\n[bold blue]Step 4: Saving your API key[/bold blue]")
+    try:
+        env_content = f"OPENAI_API_KEY={api_key}\n"
+        env_file.write_text(env_content)
+        console.print("[green]✓ API key saved to .env file[/green]")
+    except Exception as e:
+        console.print(f"[red]❌ Failed to save API key: {e}[/red]")
+        console.print("Please manually add your API key to the .env file:")
+        console.print(f"OPENAI_API_KEY={api_key}")
+        return False
+    
+    console.print("\n[bold green]🎉 Setup Complete![/bold green]")
+    console.print("Your OpenAI API key has been configured successfully.")
+    console.print("\nYou can now use the AI Bot Agent:")
+    console.print("• ai-bot chat - Start interactive chat")
+    console.print("• ai-bot ask 'Your question' - Ask a single question")
+    console.print("• ai-bot code 'Description' - Generate code")
+    
+    return True
+
+@app.command()
+def setup():
+    """Set up OpenAI API key with automated assistance."""
+    setup_openai_key()
 
 @app.command()
 def chat():

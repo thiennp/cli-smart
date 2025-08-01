@@ -11,6 +11,7 @@ A powerful AI assistant that runs from the command line with various capabilitie
 - **Rich CLI Interface**: Beautiful terminal interface with colors and formatting
 - **Conversation History**: Maintains context across interactions
 - **Multiple AI Models**: Support for different OpenAI models
+- **Easy Setup**: Automated OpenAI API key configuration
 
 ## Installation
 
@@ -21,50 +22,73 @@ A powerful AI assistant that runs from the command line with various capabilitie
 
 ### Quick Start
 
-1. **Clone or download the project**
-   ```bash
-   git clone <repository-url>
-   cd cli-smart
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Set up your API key**
-   ```bash
-   cp env.example .env
-   # Edit .env and add your OpenAI API key
-   ```
-
-4. **Run the bot**
-   ```bash
-   python main.py --help
-   ```
-
-### Alternative Installation
-
-You can also install it as a package:
+#### Option 1: Homebrew (Recommended for macOS)
 
 ```bash
-pip install -e .
+# Install via Homebrew
+brew install ai-bot-agent
+
+# Set up your API key
+ai setup
+
+# Start using the bot
+ai chat
 ```
 
-Then run it as:
+#### Option 2: PyPI
 
 ```bash
-ai-bot --help
+# Install the package
+pip install ai-bot-agent
+
+# Set up your API key
+ai-bot setup
+```
+
+This will:
+- Open the OpenAI API key page in your browser
+- Guide you through creating an API key
+- Test and save your key automatically
+
+#### Option 3: Source Installation
+
+```bash
+git clone https://github.com/thiennp/cli-smart.git
+cd cli-smart
+pip install -r requirements.txt
+python main.py setup
 ```
 
 ## Usage
+
+### Easy Setup
+
+Set up your OpenAI API key with automated assistance:
+
+```bash
+# With Homebrew installation
+ai setup
+
+# With PyPI installation
+ai-bot setup
+```
+
+This command will:
+- Open https://platform.openai.com/api-keys in your browser
+- Guide you through creating an API key
+- Test the key to ensure it works
+- Save it securely to your `.env` file
 
 ### Interactive Chat Mode
 
 Start an interactive conversation with the AI:
 
 ```bash
-python main.py chat
+# With Homebrew installation
+ai chat
+
+# With PyPI installation
+ai-bot chat
 ```
 
 ### Ask a Single Question
@@ -72,7 +96,11 @@ python main.py chat
 Ask a specific question:
 
 ```bash
-python main.py ask "What is machine learning?"
+# With Homebrew installation
+ai ask "What is machine learning?"
+
+# With PyPI installation
+ai-bot ask "What is machine learning?"
 ```
 
 ### Generate Code
@@ -80,13 +108,21 @@ python main.py ask "What is machine learning?"
 Generate code from a description:
 
 ```bash
-python main.py code "Create a simple web scraper"
+# With Homebrew installation
+ai code "Create a simple web scraper"
+
+# With PyPI installation
+ai-bot code "Create a simple web scraper"
 ```
 
 Generate code in a specific language:
 
 ```bash
-python main.py code "Create a REST API" --lang javascript
+# With Homebrew installation
+ai code "Create a REST API" --lang javascript
+
+# With PyPI installation
+ai-bot code "Create a REST API" --lang javascript
 ```
 
 ### Analyze Files
@@ -94,7 +130,11 @@ python main.py code "Create a REST API" --lang javascript
 Analyze a file and get insights:
 
 ```bash
-python main.py analyze main.py
+# With Homebrew installation
+ai analyze main.py
+
+# With PyPI installation
+ai-bot analyze main.py
 ```
 
 ### Search the Web
@@ -102,7 +142,11 @@ python main.py analyze main.py
 Search for information:
 
 ```bash
-python main.py search "latest Python features"
+# With Homebrew installation
+ai search "latest Python features"
+
+# With PyPI installation
+ai-bot search "latest Python features"
 ```
 
 ### Clear History
@@ -110,7 +154,11 @@ python main.py search "latest Python features"
 Clear conversation history:
 
 ```bash
-python main.py clear
+# With Homebrew installation
+ai clear
+
+# With PyPI installation
+ai-bot clear
 ```
 
 ### Get Help
@@ -118,12 +166,22 @@ python main.py clear
 Show help information:
 
 ```bash
-python main.py help
+# With Homebrew installation
+ai help
+
+# With PyPI installation
+ai-bot help
 ```
 
 ## Configuration
 
-Create a `.env` file in the project root with your configuration:
+The setup command automatically creates a `.env` file with your configuration:
+
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+You can also manually edit the `.env` file to customize:
 
 ```env
 # OpenAI API Configuration
@@ -158,16 +216,22 @@ AI Bot: Machine learning is like teaching a computer to learn...
 
 ```bash
 # Generate a Python web scraper
-python main.py code "Create a web scraper that extracts titles from a news website"
+ai code "Create a web scraper that extracts titles from a news website"
 
 # Generate a JavaScript function
-python main.py code "Create a function to validate email addresses" --lang javascript
+ai code "Create a function to validate email addresses" --lang javascript
 
 # Generate a data analysis script
-python main.py code "Create a script to analyze CSV data and create visualizations"
+ai code "Create a script to analyze CSV data and create visualizations"
 ```
 
 ## Features in Detail
+
+### Easy Setup
+- Automated browser opening to OpenAI API key page
+- Step-by-step guidance for API key creation
+- Automatic validation and testing of API keys
+- Secure storage in `.env` file
 
 ### Interactive Chat Mode
 - Maintains conversation context
@@ -193,6 +257,31 @@ python main.py code "Create a script to analyze CSV data and create visualizatio
 - Research capabilities
 - Information gathering
 
+## Installation Options
+
+### 1. Homebrew (macOS)
+```bash
+brew install ai-bot-agent
+ai setup
+ai chat
+```
+
+### 2. PyPI (All Platforms)
+```bash
+pip install ai-bot-agent
+ai-bot setup
+ai-bot chat
+```
+
+### 3. Source (Development)
+```bash
+git clone https://github.com/thiennp/cli-smart.git
+cd cli-smart
+pip install -r requirements.txt
+python main.py setup
+python main.py chat
+```
+
 ## Troubleshooting
 
 ### Common Issues
@@ -201,13 +290,13 @@ python main.py code "Create a script to analyze CSV data and create visualizatio
    ```
    Error: OpenAI client not initialized. Please check your API key.
    ```
-   Solution: Make sure your OpenAI API key is set in the `.env` file.
+   Solution: Run `ai setup` or `ai-bot setup` to configure your API key
 
 2. **Module Not Found**
    ```
    ModuleNotFoundError: No module named 'openai'
    ```
-   Solution: Install dependencies with `pip install -r requirements.txt`
+   Solution: Install dependencies with `pip install ai-bot-agent`
 
 3. **Permission Denied**
    ```
@@ -217,8 +306,8 @@ python main.py code "Create a script to analyze CSV data and create visualizatio
 
 ### Getting Help
 
-- Use `python main.py help` for command help
-- Use `python main.py --help` for general help
+- Use `ai help` or `ai-bot help` for command help
+- Use `ai --help` or `ai-bot --help` for general help
 - Check the logs for detailed error messages
 
 ## Contributing
@@ -241,4 +330,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Version History
 
-- **v1.0.0**: Initial release with basic chat, code generation, and file analysis features 
+- **v1.0.0**: Initial release with basic chat, code generation, and file analysis features
+- **v1.1.0**: Added automated setup command for easy API key configuration 
